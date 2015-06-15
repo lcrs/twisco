@@ -1,4 +1,7 @@
-import os, oauth2,json
+# TODO:
+#	o ignore favs of replies, search for @username
+
+import os, sys, time, oauth2, json
 
 CONSUMER_KEY = os.environ['CONSUMER_KEY']
 CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
@@ -13,11 +16,25 @@ def req(url):
 	(response, content) = client.request(url)
 	return json.loads(content)
 
-acct = req('https://api.twitter.com/1.1/account/verify_credentials.json')
-
-friends = req('https://api.twitter.com/1.1/friends/ids.json?user_id=%s' % acct['id'])
-
-for friend in friends['ids'][0:1]:
-	favs = req('https://api.twitter.com/1.1/favorites/list.json?user_id=%s' % friend)
-	for fav in favs:
-		print fav['text'] + '\n\n'
+while(True):
+	try:
+		acct = req('https://api.twitter.com/1.1/account/verify_credentials.json')
+		friends = req('https://api.twitter.com/1.1/friends/ids.json?user_id=%s' % acct['id'])
+		for friend in friends['ids']:
+			try:
+				os.makedirs('tweets/%s' % friend)
+			except:
+				pass
+			favs = req('https://api.twitter.com/1.1/favorites/list.json?user_id=%s' % friend)
+			for fav in favs:
+				f = open('tweets/%s/%s' % (friend, fav['id']), 'w')
+				oembed = req('https://api.twitter.com/1.1/statuses/oembed.json?id=%s&omit_script=true' % fav['id'])
+				html = oembed['html'].encode('utf-8')
+				print html
+				f.write(html)
+				f.close()
+			time.sleep(80)
+	except:
+		print "Sleeping for 16 minutes..."
+		sleep(60*16)
+		continue
