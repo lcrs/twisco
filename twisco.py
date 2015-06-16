@@ -17,14 +17,14 @@ def req(url):
 	return json.loads(content)
 
 while(True):
-	try:
-		acct = req('https://api.twitter.com/1.1/account/verify_credentials.json')
-		friends = req('https://api.twitter.com/1.1/friends/ids.json?user_id=%s' % acct['id'])
-		for friend in friends['ids']:
-			try:
-				os.makedirs('tweets/%s' % friend)
-			except:
-				pass
+	acct = req('https://api.twitter.com/1.1/account/verify_credentials.json')
+	friends = req('https://api.twitter.com/1.1/friends/ids.json?user_id=%s' % acct['id'])
+	for friend in friends['ids']:
+		try:
+			os.makedirs('tweets/%s' % friend)
+		except:
+			pass
+		try:
 			favs = req('https://api.twitter.com/1.1/favorites/list.json?user_id=%s' % friend)
 			for fav in favs:
 				f = open('tweets/%s/%s' % (friend, fav['id']), 'w')
@@ -33,8 +33,10 @@ while(True):
 				print html
 				f.write(html)
 				f.close()
-			time.sleep(80)
-	except:
-		print "Sleeping for 16 minutes..."
-		time.sleep(60*16)
-		continue
+			#time.sleep(80)
+		except Exception as e:
+			print e
+			print "Sleeping for 16 minutes..."
+			time.sleep(60*16)
+			continue
+	sleep(60)
