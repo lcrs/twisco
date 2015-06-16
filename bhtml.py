@@ -1,9 +1,12 @@
+# Render tweets from twiscod.py's tweets folder into a webpage
+# lewis@lewissaunders.com
 # TODO:
-#	o delete as we render, or soft delete?
+#	o balance amongst friends or random overall?
+#	o delete as we render, or soft delete by moving?
 
 import os, glob, random
 
-twheader = """<script>window.twttr = (function(d, s, id) {
+print """<script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
   if (d.getElementById(id)) return t;
@@ -23,27 +26,23 @@ twheader = """<script>window.twttr = (function(d, s, id) {
 td {
 	vertical-align: top;
 }
-</style>"""
-
-h = open('t.html', 'w')
-h.write(twheader)
+</style>
+<table><tr><td>"""
 
 favs = []
-
 friends = glob.glob('tweets/*')
 for friend in friends:
-	tweets = glob.glob(friend + '/*')[0:9]
+	tweets = glob.glob(friend + '/*')
 	for tweet in tweets:
 		f = open(tweet)
 		favs.append(f.read())
 		f.close()
 
-h.write('<table><tr><td>')
 for t in range(min(len(favs), 50)):
 	randomindex = random.randint(0, len(favs)-1)
 	if(t % 10 == 0):
-		h.write('</td><td>')
-	h.write(favs[randomindex])
-	favs.remove(favs[randomindex])
-h.write('</td></tr></table>')
-h.close()
+		print '</td><td>'
+	print favs[randomindex]
+	favs.pop(randomindex)
+
+print '</td></tr></table>'
