@@ -36,5 +36,5 @@ while(True):
 			time.sleep(80)
 	except:
 		print "Sleeping for 16 minutes..."
-		sleep(60*16)
+		time.sleep(60*16)
 		continue
