@@ -33,7 +33,7 @@ while(True):
 				print html
 				f.write(html)
 				f.close()
-			#time.sleep(80)
+			time.sleep(80)
 		except Exception as e:
 			print e
 			print "Sleeping for 16 minutes..."
