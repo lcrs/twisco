@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Render tweets from twiscod.py's tweets folder into a webpage
 # lewis@lewissaunders.com
 # TODO:
@@ -7,6 +8,8 @@ import os, glob, random
 
 print """Content-Type: text/html
 
+<head>
+<title>Twisco</title>
 <script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
 	t = window.twttr || {};
@@ -22,16 +25,18 @@ print """Content-Type: text/html
   };
  
   return t;
-}(document, "script", "twitter-wjs"));</script>"""
+}(document, "script", "twitter-wjs"));</script>
+</head>
+"""
 
-tweets = glob.glob('../tweets/*/*')
+tweets = glob.glob('tweets/*/*')
 
 shown = 0
 while(shown < min(len(tweets), 20)):
 	r = random.randint(0, len(tweets) - 1)
 	tweet = tweets[r]
 	(friend, twid) = tweet.split('/')[1:]
-	seenpath = '../seen/%s/%s' % (friend, twid)
+	seenpath = 'seen/%s/%s' % (friend, twid)
 	if(os.path.exists(seenpath)):
 		os.rename(tweet, seenpath)
 		continue
@@ -43,7 +48,7 @@ while(shown < min(len(tweets), 20)):
 	print html.replace('twitter-tweet', 'twitter-tweet tw-align-center') + '<br><br>'
 
 	try:
-		os.makedirs('../seen/%s' % friend)
+		os.makedirs('seen/%s' % friend)
 	except:
 		pass
 	os.rename(tweet, seenpath)
