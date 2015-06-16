@@ -39,7 +39,7 @@ for friend in friends:
 		f.close()
 
 h.write('<table><tr><td>')
-for t in range(50):
+for t in range(min(len(favs), 50)):
 	randomindex = random.randint(0, len(favs)-1)
 	if(t % 10 == 0):
 		h.write('</td><td>')
