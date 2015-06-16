@@ -37,8 +37,8 @@ while(True):
 			print "[%s] Done with friend %s, @%s, sleeping 90s" % (time.strftime("%Y%m%d %H:%M:%S"), friendid, friendname)
 			time.sleep(90)
 		except Exception as e:
-			print "[%s] Exception, sleeping 16 minutes: %s %s" % (time.strftime("%Y%m%d %H:%M:%S"), type(e), e, favs)
+			print "[%s] Exception, sleeping 16 minutes: %s %s %s" % (time.strftime("%Y%m%d %H:%M:%S"), type(e), e, favs)
 			time.sleep(60*16)
 			continue
-	print "[%s] Done with all friends, sleeping 10 minutes" % (time.strftime("%Y%m%d %H:%M:%S"))
-	time.sleep(10*60)
+	print "[%s] Done with all friends, sleeping 6 hours" % (time.strftime("%Y%m%d %H:%M:%S"))
+	time.sleep(6*60*60)
