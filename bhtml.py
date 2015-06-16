@@ -1,8 +1,7 @@
 # TODO:
 #	o delete as we render, or soft delete?
-#	o layout
 
-import os, glob
+import os, glob, random
 
 twheader = """<script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
@@ -19,15 +18,32 @@ twheader = """<script>window.twttr = (function(d, s, id) {
   };
  
   return t;
-}(document, "script", "twitter-wjs"));</script>"""
+}(document, "script", "twitter-wjs"));</script>
+<style>
+td {
+	vertical-align: top;
+}
+</style>"""
 
 h = open('t.html', 'w')
 h.write(twheader)
 
+favs = []
+
 friends = glob.glob('tweets/*')
 for friend in friends:
-	tweets = glob.glob(friend + '/*')[0:0]
+	tweets = glob.glob(friend + '/*')[0:9]
 	for tweet in tweets:
 		f = open(tweet)
-		h.write(f.read())
+		favs.append(f.read())
 		f.close()
+
+h.write('<table><tr><td>')
+for t in range(50):
+	randomindex = random.randint(0, len(favs)-1)
+	if(t % 10 == 0):
+		h.write('</td><td>')
+	h.write(favs[randomindex])
+	favs.remove(favs[randomindex])
+h.write('</td></tr></table>')
+h.close()
