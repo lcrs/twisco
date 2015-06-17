@@ -26,13 +26,19 @@ print """Content-Type: text/html
  
   return t;
 }(document, "script", "twitter-wjs"));</script>
+<style>
+td {
+	vertical-align: top;
+}
+</style>
 </head>
+<table><tr><td>
 """
 
 tweets = glob.glob('tweets/*/*')
 
 shown = 0
-while(shown < min(len(tweets), 20)):
+while(shown < min(len(tweets), 50)):
 	r = random.randint(0, len(tweets) - 1)
 	tweet = tweets[r]
 	(friend, twid) = tweet.split('/')[1:]
@@ -45,7 +51,9 @@ while(shown < min(len(tweets), 20)):
 	html = f.read()
 	f.close()
 
-	print html.replace('twitter-tweet', 'twitter-tweet tw-align-center') + '<br><br>'
+	print html.replace('twitter-tweet', 'twitter-tweet tw-align-center')
+	if(shown > 0 and shown % 10 == 0):
+		print '\n</td><td>\n'
 
 	try:
 		os.makedirs('seen/%s' % friend)
@@ -55,3 +63,5 @@ while(shown < min(len(tweets), 20)):
 	tweets.pop(r)
 
 	shown = shown + 1
+
+print '\n</td></tr></table>\n'
