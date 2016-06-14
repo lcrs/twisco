@@ -18,17 +18,28 @@ print """Content-Type: text/html
   js.id = id;
   js.src = "https://platform.twitter.com/widgets.js";
   fjs.parentNode.insertBefore(js, fjs);
- 
+
   t._e = [];
   t.ready = function(f) {
 	t._e.push(f);
   };
- 
+
   return t;
 }(document, "script", "twitter-wjs"));</script>
 <style>
 td {
 	vertical-align: top;
+}
+blockquote.twitter-tweet-error {
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #999999;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  padding: 5px;
+}
+blockquote.twitter-tweet-error a {
+  color: #999999;
 }
 </style>
 </head>
@@ -46,7 +57,7 @@ while(shown < min(len(tweets), 35)):
 	if(os.path.exists(seenpath)):
 		os.rename(tweet, seenpath)
 		continue
-	
+
 	f = open(tweet)
 	html = f.read()
 	f.close()
