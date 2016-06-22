@@ -10,6 +10,7 @@ print """Content-Type: text/html
 
 <head>
 <title>Twisco</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=460">
 <script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],

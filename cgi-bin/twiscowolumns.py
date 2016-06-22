@@ -9,6 +9,7 @@ import os, glob, random
 print """Content-Type: text/html
 
 <head>
+<meta charset="UTF-8">
 <title>Twisco</title>
 <script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
