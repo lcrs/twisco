@@ -36,6 +36,8 @@ blockquote.twitter-tweet-error {
   border: 1px solid #eeeeee;
   border-radius: 4px;
   padding: 5px;
+  width: 490px;
+  margin: auto;
 }
 blockquote.twitter-tweet-error a {
   color: #999999;
