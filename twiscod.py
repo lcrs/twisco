@@ -15,7 +15,12 @@ while(True):
 	account = req('https://api.twitter.com/1.1/account/verify_credentials.json')
 	friends = req('https://api.twitter.com/1.1/friends/ids.json?user_id=%s' % account['id'])
 	for friendid in friends['ids']:
-		friendname = req('https://api.twitter.com/1.1/users/show.json?user_id=%s' % friendid)['screen_name']
+		try:
+			friendname = req('https://api.twitter.com/1.1/users/show.json?user_id=%s' % friendid)['screen_name']
+		except KeyError as e:
+			# End up here when a friend disappears
+			print "[%s] Failed to get name for friend %s, skipping" % (time.strftime("%Y%m%d %H:%M:%S"), friendid)
+			continue
 		friendfolder = 'tweets/%s' % friendid
 		try:
 			os.makedirs(friendfolder)
